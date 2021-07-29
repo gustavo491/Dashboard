@@ -1,10 +1,6 @@
 @extends('layouts.admin')
 
 @section('content')
-<!DOCTYPE html>
-<html>
-<head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
 * {
   box-sizing: border-box;
@@ -41,32 +37,41 @@
   background-color: #f1f1f1;
 }
 </style>
-</head>
-<body>
 
-<h2>Alunos</h2>
-<div class="row">
-    <div class="col-md-6">
-        <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Pesquise..." title="Escreva aqui">
-    </div>
-    <div class="col-md-6">
-        <a href="{{ url('/students-edit') }}" class="btn btn-success">Adicionar</a>
-    </div>
-</div>
-<div class='container'>
-    <table id="myTable">
-        <tr class="header">
-            <th style="width:10%;">Matrícula</th>
-            <th style="width:55%;">Nome</th>
-        </tr>
-        @foreach($students as $student)
-        <tr>
-            <td>{{$student->id}}</td>
-            <td>{{$student->name}}</td>
-        </tr>
-        @endforeach
-    </table>
-    {{ $students->links()}}
+<div class="container pt-5">
+  <h2>Alunos</h2>
+  <div class="row">
+      <div class="col-md-6">
+          <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Pesquise..." title="Escreva aqui">
+      </div>
+      <div class="col-md-6">
+          <a href="{{ url('/students/add') }}" class="btn btn-success">Adicionar</a>
+      </div>
+  </div>
+  <table id="myTable">
+      <tr class="header">
+          <th style="width:10%;">Matrícula</th>
+          <th style="width:75%;">Nome</th>
+          <th style="width:15%;" class="text-center">Ações</th>
+      </tr>
+      @foreach($students as $student)
+      <tr>
+          <td>{{$student->id}}</td>
+          <td>{{$student->name}}</td>
+          <td>
+            <div class="row">
+                <div class="col-md-6 px-1">
+                  <a href="{{ url('/students/edit/') }}/{{ $student->id }}" class="btn btn-primary">Editar</a>
+                </div>
+                <div class="col-md-6">
+                  <a href="{{ url('/students/delete/') }}/{{ $student->id }}" class="btn btn-danger">Apagar</a>
+                </div>
+            </div>
+          </td>
+      </tr>
+      @endforeach
+  </table>
+  {{ $students->links()}}
 </div>
 <script>
 function myFunction() {
@@ -88,8 +93,5 @@ function myFunction() {
   }
 }
 </script>
-
-</body>
-</html>
 
 @endsection
