@@ -24,8 +24,13 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $students = DB::table('students')->paginate(5);
+        $access = DB::table('access')->get();
+        $total = ['01' => 0,'02' => 0,'03' => 0,'04' => 0,'05' => 0,'06' => 0,'07' => 0,'08' => 0,'09' => 0,'10' => 0,'11' => 0,'12' => 0];
 
-        return view('home', ['students' => $students]);
+        foreach($access as $key => $data){
+            $total[date('m',strtotime($data->created_at))] = $data->access;
+        }
+
+        return view('home', ['access' => $access, 'total' => $total]);
     }
 }
